@@ -31,9 +31,16 @@ exports.login = function (req, res) {
         }
 
         if (!user || !user.comparePassword(req.body.password)) {
-            return res.status(401).json({message: 'Authentication failed.'});
+            return res.status(401).json({message: 'Username or Password not correct!'});
         }
 
         res.status(200).json({user: user.toJsonData(), access_token: user.getAccessToken()});
     });
+};
+
+exports.auth = function (req, res, next) {
+    if(req.user == null){
+        return res.status(401).json({"message": "Unauthorization !"});
+    }
+    next();
 };
