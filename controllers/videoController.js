@@ -3,17 +3,17 @@ var googleApi = require('../helpers/api/googleApi');
 
 exports.listByLocation = async function (req, res) {
     try {
-        if (!req.body.lat || !req.body.lng || !req.body.distance) {
+        if (!req.query.latitude || !req.query.longitude || !req.query.distance) {
             return res.status(400).send({message: "Invalid parameter"});
         }
 
-        var location = req.body.lat + "," + req.body.lng
-        var distance = req.body.distance;
+        var location = req.query.latitude + "," + req.query.longitude
+        var distance = req.query.distance;
 
         var data = await googleApi.getVideoByLocation(location, distance);
         res.json(data);
     } catch (error) {
         console.log("ERROR");
-        res.status(400).json({error: "Invalid parameter"});
+        res.status(400).json({message: "An occur error, please try again !"});
     }
 };
