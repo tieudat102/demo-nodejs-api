@@ -9,8 +9,9 @@ exports.listByLocation = async function (req, res) {
 
         var location = req.query.latitude + "," + req.query.longitude
         var distance = req.query.distance;
+		var pageToken = req.query.pageToken || "";
 
-        var data = await googleApi.getVideoByLocation(location, distance);
+        var data = await googleApi.getVideoByLocation(location, distance, pageToken);
         res.json(data);
     } catch (error) {
         console.log("ERROR");
